@@ -1,8 +1,8 @@
-import openai
+from openai import OpenAI
 import os
 
 # Initialize the OpenAI client
-openai.api_key = os.getenv("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")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 SYSTEM_PROMPT = """You are an AI Coding Pair Programmer, a senior Python developer with advanced problem-solving skills. 
 Your responses should demonstrate a clear chain of thought:
@@ -21,17 +21,17 @@ Assist the user with their coding tasks and challenges using this structured app
 
 def ai_pair_programmer(conversation_history):
     """
-    Function to interact with the GPT-4o model and get responses for coding tasks.
+    Function to interact with the GPT-4 model and get responses for coding tasks.
     """
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4o",
+        response = client.chat.completions.create(
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 *conversation_history
             ]
         )
-        return response.choices[0].message['content']
+        return response.choices[0].message.content
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
