@@ -2,6 +2,7 @@ from openai import OpenAI
 import os
 from dotenv import load_dotenv
 from ai_pair_programmer import ai_pair_programmer
+from tools import create_file, read_file, edit_file
 
 # Load environment variables from .env file
 load_dotenv()
@@ -18,6 +19,10 @@ MANAGER_SYSTEM_PROMPT = """You are a project manager with 15 years of experience
 - Review the AI pair programmer's responses and provide feedback or additional instructions if necessary.
 - Summarize the overall progress and next steps for the user.
 - Always communicate with the AI pair programmer as if you are the user, using "I" statements.
+- Use the available tools when necessary:
+  1. create_file(file_path, content): Creates a new file with the given content.
+  2. read_file(file_path): Reads the content of an existing file.
+  3. edit_file(file_path, new_content): Edits an existing file and returns the diff.
 </responses>"""
 
 def manager_agent(user_input):
