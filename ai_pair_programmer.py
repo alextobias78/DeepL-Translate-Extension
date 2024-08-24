@@ -1,8 +1,12 @@
 from openai import OpenAI
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Initialize the OpenAI client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI()
 
 SYSTEM_PROMPT = """You are an AI Coding Pair Programmer, a senior Python developer with advanced problem-solving skills. 
 Your responses should demonstrate a clear chain of thought:
