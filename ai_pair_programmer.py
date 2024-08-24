@@ -22,18 +22,20 @@ SYSTEM_PROMPT = """You are a senior software developer with 12 years of experien
 def ai_pair_programmer(conversation_history):
     """
     Function to interact with the GPT-4 model and get responses for coding tasks.
+    Returns a generator that yields streamed responses.
     """
     try:
-        response = client.chat.completions.create(
+        stream = client.chat.completions.create(
             model="gpt-4o",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 *conversation_history
-            ]
+            ],
+            stream=True,
         )
-        return response.choices[0].message.content
+        return stream
     except Exception as e:
-        return f"An error occurred: {str(e)}"
+        yield f"An error occurred: {str(e)}"
 
 def main():
     print("Welcome to AI Coding Pair Programmer!")
@@ -48,11 +50,16 @@ def main():
         
         conversation_history.append({"role": "user", "content": user_input})
         
-        response = ai_pair_programmer(conversation_history)
         print("\nAI Pair Programmer:")
-        print(response)
+        full_response = ""
+        for chunk in ai_pair_programmer(conversation_history):
+            if chunk.choices[0].delta.content is not None:
+                content = chunk.choices[0].delta.content
+                print(content, end="", flush=True)
+                full_response += content
+        print()  # New line after the complete response
         
-        conversation_history.append({"role": "assistant", "content": response})
+        conversation_history.append({"role": "assistant", "content": full_response})
 
 if __name__ == "__main__":
     main()
