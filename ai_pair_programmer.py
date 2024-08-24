@@ -26,14 +26,15 @@ def ai_pair_programmer(conversation_history):
     """
     try:
         stream = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4",  # Changed from "gpt-4o" to "gpt-4"
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 *conversation_history
             ],
             stream=True,
         )
-        return stream
+        for chunk in stream:
+            yield chunk
     except Exception as e:
         yield f"An error occurred: {str(e)}"
 
@@ -53,13 +54,17 @@ def main():
         print("\nAI Pair Programmer:")
         full_response = ""
         for chunk in ai_pair_programmer(conversation_history):
+            if isinstance(chunk, str):  # Error message
+                print(chunk)
+                break
             if chunk.choices[0].delta.content is not None:
                 content = chunk.choices[0].delta.content
                 print(content, end="", flush=True)
                 full_response += content
         print()  # New line after the complete response
         
-        conversation_history.append({"role": "assistant", "content": full_response})
+        if full_response:  # Only append if we got a response
+            conversation_history.append({"role": "assistant", "content": full_response})
 
 if __name__ == "__main__":
     main()
