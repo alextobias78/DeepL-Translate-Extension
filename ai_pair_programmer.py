@@ -2,7 +2,7 @@ from openai import OpenAI
 import os
 
 # Initialize the OpenAI client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI("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")
 
 SYSTEM_PROMPT = """You are an AI Coding Pair Programmer, a senior Python developer with advanced problem-solving skills. 
 Your responses should demonstrate a clear chain of thought:
