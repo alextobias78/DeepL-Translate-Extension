@@ -4,7 +4,7 @@ import os
 # Initialize the OpenAI client
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def ai_pair_programmer(user_input, system_prompt="""You are an AI Coding Pair Programmer, a senior Python developer with advanced problem-solving skills. 
+SYSTEM_PROMPT = """You are an AI Coding Pair Programmer, a senior Python developer with advanced problem-solving skills. 
 Your responses should demonstrate a clear chain of thought:
 
 1. Understand the problem: Restate the user's question or challenge to ensure you've grasped it correctly.
@@ -17,7 +17,9 @@ Your responses should demonstrate a clear chain of thought:
 Remember to think through each step carefully and articulate your thought process clearly. 
 This will help the user understand not just the solution, but how you arrived at it.
 
-Assist the user with their coding tasks and challenges using this structured approach."""):
+Assist the user with their coding tasks and challenges using this structured approach."""
+
+def ai_pair_programmer(conversation_history):
     """
     Function to interact with the GPT-4o model and get responses for coding tasks.
     """
@@ -25,8 +27,8 @@ Assist the user with their coding tasks and challenges using this structured app
         response = openai.ChatCompletion.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_input}
+                {"role": "system", "content": SYSTEM_PROMPT},
+                *conversation_history
             ]
         )
         return response.choices[0].message['content']
@@ -37,14 +39,20 @@ def main():
     print("Welcome to AI Coding Pair Programmer!")
     print("Type 'exit' to quit the program.")
     
+    conversation_history = []
+    
     while True:
         user_input = input("\nEnter your coding question or challenge: ")
         if user_input.lower() == 'exit':
             break
         
-        response = ai_pair_programmer(user_input)
+        conversation_history.append({"role": "user", "content": user_input})
+        
+        response = ai_pair_programmer(conversation_history)
         print("\nAI Pair Programmer:")
         print(response)
+        
+        conversation_history.append({"role": "assistant", "content": response})
 
 if __name__ == "__main__":
     main()
