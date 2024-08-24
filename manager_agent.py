@@ -80,6 +80,33 @@ def main():
         manager_review = manager_agent(f"Review this AI Pair Programmer response and provide feedback or next steps:\n{full_response}")
         print("\nManager's feedback and next steps:")
         print(manager_review)
+        
+        # Demonstrate the use of tools
+        if "create_file" in full_response.lower():
+            file_path = input("Enter the file path to create: ")
+            content = input("Enter the content for the file: ")
+            if create_file(file_path, content):
+                print(f"File '{file_path}' created successfully.")
+            else:
+                print(f"Failed to create file '{file_path}'.")
+        
+        if "read_file" in full_response.lower():
+            file_path = input("Enter the file path to read: ")
+            content = read_file(file_path)
+            if content is not None:
+                print(f"Content of '{file_path}':\n{content}")
+            else:
+                print(f"Failed to read file '{file_path}'.")
+        
+        if "edit_file" in full_response.lower():
+            file_path = input("Enter the file path to edit: ")
+            new_content = input("Enter the new content for the file: ")
+            success, diff = edit_file(file_path, new_content)
+            if success:
+                print(f"File '{file_path}' edited successfully. Diff:")
+                print(diff)
+            else:
+                print(f"Failed to edit file '{file_path}'. Error: {diff}")
 
 if __name__ == "__main__":
     main()
