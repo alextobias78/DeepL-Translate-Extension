@@ -38,33 +38,5 @@ def ai_pair_programmer(conversation_history):
     except Exception as e:
         yield f"An error occurred: {str(e)}"
 
-def main():
-    print("Welcome to AI Coding Pair Programmer!")
-    print("Type 'exit' to quit the program.")
-    
-    conversation_history = []
-    
-    while True:
-        user_input = input("\nEnter your coding question or challenge: ")
-        if user_input.lower() == 'exit':
-            break
-        
-        conversation_history.append({"role": "user", "content": user_input})
-        
-        print("\nAI Pair Programmer:")
-        full_response = ""
-        for chunk in ai_pair_programmer(conversation_history):
-            if isinstance(chunk, str):  # Error message
-                print(chunk)
-                break
-            if chunk.choices[0].delta.content is not None:
-                content = chunk.choices[0].delta.content
-                print(content, end="", flush=True)
-                full_response += content
-        print()  # New line after the complete response
-        
-        if full_response:  # Only append if we got a response
-            conversation_history.append({"role": "assistant", "content": full_response})
-
-if __name__ == "__main__":
-    main()
+# The main() function has been removed as it's no longer needed in this file.
+# The ai_pair_programmer function will be called from the manager_agent.py file.
