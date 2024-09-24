@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DeepL Translator</title>
+  <link rel="stylesheet" type="text/css" href="popup.css">
+</head>
+<body>
+  <h1>DeepL Translator</h1>
+  <div id="apiKeySection">
+    <input type="text" id="apiKeyInput" placeholder="Enter DeepL API Key">
+    <p class="helper-text">For free accounts, the API key should end with ':fx'</p>
+    <button id="saveApiKey">Save API Key</button>
+  </div>
+  <div id="languageSection">
+    <label for="targetLanguage">Translate to:</label>
+    <select id="targetLanguage">
+      <option value="BG">Bulgarian</option>
+      <option value="CS">Czech</option>
+      <option value="DA">Danish</option>
+      <option value="DE">German</option>
+      <option value="EL">Greek</option>
+      <option value="EN-GB">English (British)</option>
+      <option value="EN-US">English (American)</option>
+      <option value="ES">Spanish</option>
+      <option value="ET">Estonian</option>
+      <option value="FI">Finnish</option>
+      <option value="FR">French</option>
+      <option value="HU">Hungarian</option>
+      <option value="IT">Italian</option>
+      <option value="JA">Japanese</option>
+      <option value="LT">Lithuanian</option>
+      <option value="LV">Latvian</option>
+      <option value="NL">Dutch</option>
+      <option value="PL">Polish</option>
+      <option value="PT-PT">Portuguese</option>
+      <option value="PT-BR">Portuguese (Brazilian)</option>
+      <option value="RO">Romanian</option>
+      <option value="RU">Russian</option>
+      <option value="SK">Slovak</option>
+      <option value="SL">Slovenian</option>
+      <option value="SV">Swedish</option>
+      <option value="ZH">Chinese (simplified)</option>
+    </select>
+  </div>
+  <button id="toggleTranslation">Enable Translation</button>
+  <button id="testApiConnection">Test API Connection</button>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
