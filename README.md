@@ -68,11 +68,3 @@ This extension is built using HTML, CSS, and JavaScript. The main components are
 ## Note
 
 You need a valid DeepL API key to use this extension. You can obtain one by signing up at [DeepL's website](https://www.deepl.com/pro-api).
-
-## License
-
-[Add your chosen license here]
-
-## Contributing
-
-[Add contribution guidelines if you want to accept contributions]
